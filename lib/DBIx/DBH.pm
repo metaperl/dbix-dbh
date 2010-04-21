@@ -1,15 +1,14 @@
 package DBIx::DBH;
 
-use 5.006001;
 use strict;
 use warnings;
 
-use Data::Dumper;
+
 
 use DBI;
 use Params::Validate qw( :all );
 
-our $VERSION = '0.11';
+our $VERSION = '0.2';
 
 our @attr = qw
   (  
@@ -222,6 +221,11 @@ directly to L<DBI>, you could do that also.
 
 This module is the solution for this dilemma as well.
 
+=head3 Alzabo and DBIx::AnyDBD have alternative connection syntaxes
+
+Alternative connection syntaxes such as L<DBIx::AnyDBD> or 
+L<Alzabo> can make use of the C<connect_data> API call
+
 
 =head1 API
 
@@ -256,14 +260,6 @@ driver. See
 L<DBIx::DBH::Sybase>,
 L<DBIx::DBH::mysql> and L<DBIx::DBH::Pg> for additional parameters
 acceptable based on database driver.
-
-=head2 ($dsn, $user, $pass, $attr) = connect_data(%params)
-
-C<connect_data> takes the same arguments as C<connect()> but returns
-a list of the 4 arguments required by the L<DBI> C<connect()>
-function. This is useful for working with modules that have an
-alternative connection syntax such as L<DBIx::AnyDBD> or 
-L<Alzabo>.
 
 =head2 ($dsn, $user, $pass, $attr) = connect_data(%params)
 
@@ -312,6 +308,15 @@ L<http://perlmonks.org/?node_id=835894>
 =head1 TODO
 
 =over
+
+=item * use a singleton object
+
+The current API for DBIx::DBH requires passing in the connection data 
+hash to each API function. The data hash should be bound to a singleton
+object and all methods should resource it.
+
+A good set of L<Moose> roles inspired by L<MooseX::Role::DBIx::Connector>
+or L<DBIx::Roles> might be in order.
 
 =item * use DBIx::Connector
 
