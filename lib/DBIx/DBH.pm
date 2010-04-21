@@ -121,7 +121,7 @@ __END__
 
 =head1 NAME
 
- DBIx::DBH - Perl extension for simplifying database connections
+ DBIx::DBH - helper for DBI connection data (form dsn, etc)
 
 =head1 SYNOPSIS
 
@@ -135,12 +135,12 @@ __END__
      password => 'markso'
  );
 
- my $dbh = DBIx::DBH->connect(%dat, %opt) ;
+ my $dbh = DBIx::DBH->connect(%dat, %opt) ; # yes, two hashes, not hrefs!
 
 =head1 ABSTRACT
 
-DBIx::DBH is designed to facilitate and validate the process of creating 
-DBI database connections.
+L<DBIx::DBH> is designed to facilitate and validate the process of creating 
+L<DBI> database connections.
 It's chief and unique contribution to this set of modules on CPAN is that
 it forms the DSN string for you, regardless of database driver. Another thing 
 about this module is that
@@ -155,10 +155,75 @@ L<Params::Validate>. It does not
 allow parameters which are not defined by the DBI or the database driver
 driver into the hash.
 
-I provides support for MySQL, Postgres and Sybase (thanks to Rachel Richard 
-for the Sybase support). 
+It provides support for MySQL, Postgres and Sybase (thanks to Rachel Richard
+for the Sybase support).
 
-=head1 DBIx::DBH API
+=head1 Motivation
+
+This module does not appear to be very useful at first. But it has it's place.
+Let's see why.
+
+=head2 Simple, robust DSN formation
+
+=head3 Simple
+
+Let's take a look at a L<DBI> connection string:
+
+  DBI->connect("dbi:mysql:database=sakila;host=localhost;post=3306",
+       $username, $password);
+
+Now, notice: how the C<dsn> contains a lot of subelements:
+
+=over 4
+
+=item   1. dbi
+
+=item   2. mysql
+
+=item   3. database
+
+=item   4. host
+
+=item   5. port 
+
+=cut
+
+With this module, you simply specify those sub-elements in a hash:
+
+  my %dat = ( 
+     driver => 'mysql',
+     dbname => 'sakila',
+     user => 'username',
+     password => 'pass'
+  );
+
+This is much more high-level.
+
+So, the first win is that you get to be DWIM instead of DWIS.
+
+
+=head3 Robust
+
+This module is robust. It uses L<Params::Validate> to make sure that
+what you supply is valid.
+
+=head2 Easier interaction with APIs
+
+=head3 Rose::DB::register_db() expects sub-components of a DSN
+
+If you take a look at a call to C<register_db>:
+
+L<http://search.cpan.org/~jsiracusa/Rose-DB-0.758/lib/Rose/DB/Tutorial.pod#Just_one_data_source>
+
+you will notice that it requires the sub-components of the DSN. So, 
+ideally you would be able to keep your connection data as a set of
+sub-components and supply it to L<Rose::DB> but when you want to connect
+directly to L<DBI>, you could do that also.
+
+This module is the solution for this dilemma as well.
+
+
+=head1 API
 
 =head2 $dbh = connect(%params)
 
@@ -241,6 +306,11 @@ C<$Driver> is a valid DBI driver name.
 
 =over
 
+=item * use DBIx::Connector
+
+L<DBIx::Connector> is an excellent module for reusing DBI database connections.
+This module should optionally connect to DBI via that instead of directly.
+
 =item * expose parm validation info:
 
  > 
@@ -290,9 +360,13 @@ L<http://rt.cpan.org/Ticket/Display.html?id=18026>
 
 Substantial suggestions by M. Simon Ryan Cavaletto.
 
+=head1 SOURCECODE
+
+L<http://github.com/metaperl/dbix-dbh>
+
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2004 by Terrence Brannon
+Copyright (C) by Terrence Brannon
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.4 or,
