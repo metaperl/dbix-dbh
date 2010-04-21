@@ -302,6 +302,13 @@ C<$Driver> is a valid DBI driver name.
 
 =back
 
+=head2 Links
+
+=head3 "Avoiding compound data in software and system design"
+
+L<http://perlmonks.org/?node_id=835894>
+
+
 =head1 TODO
 
 =over

@@ -59,7 +59,7 @@ The C<driver> key is used to supply the database
 
 =back
 
-Another difference is that _make_dbh() called C<DBI->connect()> with a
+Another difference is that _make_dbh() called C<< DBI->connect() >> with a
 fixed set of DBI attributes. The refactoring allows for any attributes
 to be used, both from DBI and from the driver's driver.
 
