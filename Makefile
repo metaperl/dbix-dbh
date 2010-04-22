@@ -53,11 +53,11 @@ DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
 NAME = DBIx::DBH
 NAME_SYM = DBIx_DBH
-VERSION = 0.2
+VERSION = 0.3
 VERSION_MACRO = VERSION
-VERSION_SYM = 0_2
+VERSION_SYM = 0_3
 DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
-XS_VERSION = 0.2
+XS_VERSION = 0.3
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
 INST_ARCHLIB = blib/arch
@@ -159,6 +159,7 @@ H_FILES  =
 MAN1PODS = 
 MAN3PODS = ANNOUNCE-FACTOR.pod \
 	lib/DBIx/DBH.pm \
+	lib/DBIx/DBH/Legacy.pm \
 	lib/DBIx/DBH/Pg.pm \
 	lib/DBIx/DBH/SQLite.pm \
 	lib/DBIx/DBH/Sybase.pm \
@@ -186,6 +187,7 @@ PERL_ARCHIVE_AFTER =
 
 TO_INST_PM = ANNOUNCE-FACTOR.pod \
 	lib/DBIx/DBH.pm \
+	lib/DBIx/DBH/Legacy.pm \
 	lib/DBIx/DBH/Pg.pm \
 	lib/DBIx/DBH/SQLite.pm \
 	lib/DBIx/DBH/Sybase.pm \
@@ -202,7 +204,9 @@ PM_TO_BLIB = lib/DBIx/DBH.pm \
 	lib/DBIx/DBH/mysql.pm \
 	blib/lib/DBIx/DBH/mysql.pm \
 	lib/DBIx/DBH/Sybase.pm \
-	blib/lib/DBIx/DBH/Sybase.pm
+	blib/lib/DBIx/DBH/Sybase.pm \
+	lib/DBIx/DBH/Legacy.pm \
+	blib/lib/DBIx/DBH/Legacy.pm
 
 
 # --- MakeMaker platform_constants section:
@@ -271,7 +275,7 @@ RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
 DISTNAME = DBIx-DBH
-DISTVNAME = DBIx-DBH-0.2
+DISTVNAME = DBIx-DBH-0.3
 
 
 # --- MakeMaker macro section:
@@ -429,14 +433,16 @@ manifypods : pure_all  \
 	lib/DBIx/DBH/Pg.pm \
 	ANNOUNCE-FACTOR.pod \
 	lib/DBIx/DBH/mysql.pm \
-	lib/DBIx/DBH/Sybase.pm
+	lib/DBIx/DBH/Sybase.pm \
+	lib/DBIx/DBH/Legacy.pm
 	$(NOECHO) $(POD2MAN) --section=3 --perm_rw=$(PERM_RW) \
 	  lib/DBIx/DBH.pm $(INST_MAN3DIR)/DBIx::DBH.$(MAN3EXT) \
 	  lib/DBIx/DBH/SQLite.pm $(INST_MAN3DIR)/DBIx::DBH::SQLite.$(MAN3EXT) \
 	  lib/DBIx/DBH/Pg.pm $(INST_MAN3DIR)/DBIx::DBH::Pg.$(MAN3EXT) \
 	  ANNOUNCE-FACTOR.pod $(INST_MAN3DIR)/DBIx::ANNOUNCE-FACTOR.$(MAN3EXT) \
 	  lib/DBIx/DBH/mysql.pm $(INST_MAN3DIR)/DBIx::DBH::mysql.$(MAN3EXT) \
-	  lib/DBIx/DBH/Sybase.pm $(INST_MAN3DIR)/DBIx::DBH::Sybase.$(MAN3EXT) 
+	  lib/DBIx/DBH/Sybase.pm $(INST_MAN3DIR)/DBIx::DBH::Sybase.$(MAN3EXT) \
+	  lib/DBIx/DBH/Legacy.pm $(INST_MAN3DIR)/DBIx::DBH::Legacy.$(MAN3EXT) 
 
 
 
@@ -502,7 +508,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) Generating META.yml
 	$(NOECHO) $(ECHO) '--- #YAML:1.0' > META_new.yml
 	$(NOECHO) $(ECHO) 'name:               DBIx-DBH' >> META_new.yml
-	$(NOECHO) $(ECHO) 'version:            0.2' >> META_new.yml
+	$(NOECHO) $(ECHO) 'version:            0.3' >> META_new.yml
 	$(NOECHO) $(ECHO) 'abstract:           ~' >> META_new.yml
 	$(NOECHO) $(ECHO) 'author:  []' >> META_new.yml
 	$(NOECHO) $(ECHO) 'license:            unknown' >> META_new.yml
@@ -812,7 +818,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
-	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0.2">' > $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0.3">' > $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <ABSTRACT></ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR></AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
@@ -833,7 +839,8 @@ pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	  lib/DBIx/DBH/Pg.pm blib/lib/DBIx/DBH/Pg.pm \
 	  ANNOUNCE-FACTOR.pod $(INST_LIB)/DBIx/ANNOUNCE-FACTOR.pod \
 	  lib/DBIx/DBH/mysql.pm blib/lib/DBIx/DBH/mysql.pm \
-	  lib/DBIx/DBH/Sybase.pm blib/lib/DBIx/DBH/Sybase.pm 
+	  lib/DBIx/DBH/Sybase.pm blib/lib/DBIx/DBH/Sybase.pm \
+	  lib/DBIx/DBH/Legacy.pm blib/lib/DBIx/DBH/Legacy.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 

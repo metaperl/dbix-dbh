@@ -1,117 +1,56 @@
 package DBIx::DBH;
 
-use strict;
-use warnings;
-
-
-
+use Moose;
+use Moose::Util::TypeConstraints;
 use DBI;
-use Params::Validate qw( :all );
 
-our $VERSION = '0.2';
+has [ 'username', 'password' ] => (is => 'rw', isa => 'Str');
 
-our @attr = qw
-  (  
-   dbi_connect_method
-   Warn
+subtype 'DSNHashRef'  => as 'HashRef'  => where { defined($_->{driver}) };
 
-   _Active
-   _Executed
-   _Kids
-   _ActiveKids
-   _CachedKids
-   _CompatMode
-
-   InactiveDestroy
-   PrintWarn
-   PrintError
-   RaiseError
-   HandleError
-   HandleSetErr
-
-   _ErrCount
-
-   ShowErrorStatement
-   TraceLevel
-   FetchHashKeyName
-   ChopBlanks
-   LongReadLen
-   LongTruncOk
-   TaintIn
-   TaintOut
-   Taint
-   Profile
-   _should-add-support-for-private_your_module_name_*
+has 'dsn'  => (is => 'rw', isa => 'DSNHashRef', required => 1);
+has 'attr' => (is => 'rw', isa => 'HashRef');
 
 
-   AutoCommit
+sub dsn_string {
+  my($self)=@_;
 
-   _Driver
-   _Name
-   _Statement
+  my %dsn = % { $self->dsn } ;
+  my $driver = delete($dsn{driver});
+  my $dsn = "dbi:$driver";
 
-   RowCacheSize
+  $dsn .= ";$_=$dsn{$_}"  for ( sort keys %dsn );
 
-   _Username
-  );
-
-# Preloaded methods go here.
-
-Params::Validate::validation_options(allow_extra => 1);
-
-sub connect {
-
-  my @connect_data = connect_data(@_);
-
-  my $dbh;
-  eval
-    {
-      $dbh = DBI->connect( @connect_data );
-    };
-
-  die $@ if $@;
-  die 'Unable to connect to database' unless $dbh;
-
-  return $dbh;
-
-}
-
-sub dbi_attr {
-  my ($h, %p) = @_;
-
-  $h = {} unless defined $h;
-
-  for my $attr (@attr) {
-    if (exists $p{$attr}) {
-#      warn "$attr = $p{$attr};";
-      $h->{$attr} = $p{$attr};
-    }
-  }
-
-  $h;
+  $dsn;
 }
 
 sub connect_data {
+  my($self)=@_;
+  ($self->dsn_string, $self->username, $self->password, $self->attr);
+}
 
-  my $class = shift;
-  my %p = @_;
+sub dbh {
+  my($self)=@_;
 
-  my $subclass = "DBIx::DBH::$p{driver}";
-  eval "require $subclass";
-  die "unable to require $subclass to support the $p{driver} driver.\n" if $@;
+  use DBI;
 
-  my ($dsn, $user, $pass, $attr) = $subclass->connect_data(@_);
-  $attr = dbi_attr($attr, %p);
+  my $dbh = DBI->connect($self->connect_data)
+}
 
-  ($dsn, $user, $pass, $attr)
+sub conn {
+  my($self)=@_;
+
+  require DBIx::Connector;
+
+  my $dbh = DBIx::Connector->new($self->connect_data);
 
 }
 
-sub form_dsn {
 
-  (connect_data(@_))[0];
+our $VERSION = '0.3';
 
-}
+
+
 
 
 1;
@@ -120,169 +59,64 @@ __END__
 
 =head1 NAME
 
- DBIx::DBH - helper for DBI connection data (form dsn, etc)
+ DBIx::DBH - helper for DBI connection( data)?
 
 =head1 SYNOPSIS
 
  use DBIx::DBH;
 
- my %opt = (tty => 1) ;
- my %dat = ( 
-     driver => 'Pg',
-     dbname => 'db_terry',
-     user => 'terry',
-     password => 'markso'
- );
+ my $config = DBIx::DBH->new
+   (
+     user => $user,
+     pass => $pass,
+     dsn  => { driver => 'mysql', port => 3306 },
+     attr => { RaiseError => 1 }
+   );
 
- my $dbh = DBIx::DBH->connect(%dat, %opt) ; # yes, two hashes, not hrefs!
+ $config->for_rose_db; # outputs data structure for Rose::DB::register_db
+ $config->for_dbi;     # outputs data structure for DBI connect()
+ $config->dbh;  # makes a database connection with DBI
+ $config->conn; # makes a DBIx::Connector instance
 
 =head1 ABSTRACT
 
-L<DBIx::DBH> is designed to facilitate and validate the process of creating 
-L<DBI> database connections.
-It's chief and unique contribution to this set of modules on CPAN is that
-it forms the DSN string for you, regardless of database driver. Another thing 
-about this module is that
-it takes a flat Perl hash 
-as input, making it ideal for converting HTTP form data 
-and or config file information into DBI database handles. It also can form
-DSN strings for both major free databases and is subclassed to support
-extension for other databases.
-
-DBIx::DBH provides rigorous validation on the input parameters via
-L<Params::Validate>. It does not
-allow parameters which are not defined by the DBI or the database driver
-driver into the hash.
-
-It provides support for MySQL, Postgres and Sybase (thanks to Rachel Richard
-for the Sybase support).
-
-=head1 Motivation
-
-This module does not appear to be very useful at first. But it has it's place.
-Let's see why.
-
-=head2 Simple, robust DSN formation
-
-=head3 Simple
-
-Let's take a look at a L<DBI> connection string:
-
-  DBI->connect("dbi:mysql:database=sakila;host=localhost;post=3306",
-       $username, $password);
-
-Now, notice: how the C<dsn> contains a lot of subelements:
+L<DBIx::DBH> allows you to specify the DBI dsn ( L<DBI/"connect> )
+as a hash ref instead of a string. A hashref is a more viable structure
+in a few cases:
 
 =over 4
 
-=item   1. dbi
+=item * working with Rose::DB
 
-=item   2. mysql
+L<Rose::DB::Tutorial/Registering_data_sources> shows that L<Rose::DB>
+expects the dsn information as discrete key-value pairs as opposed to
+a string. The C<< ->for_rose_db >> method takes the DBIx::DBH instance
+and returns a hash array which can be consumed by L<Rose::DB/register_db>
 
-=item   3. database
+=item * programmatic connection attempts
 
-=item   4. host
+It is much easier to manipulate a hash programmatically if you need to 
+systematically modify it as part of a series of connection attempts.
 
-=item   5. port 
+=item * high-level structure
 
-=cut
+Whether you are talking about configuration file utilities or form data,
+most data from these modules comes back directly as hashes. So you have
+a more direct way of shuttling data into a database connection if you 
+use this module:
 
-With this module, you simply specify those sub-elements in a hash:
+   my $dbh = DBIx::DBH->(dsn => $cgi->form_data->{dsn})->dbh;
 
-  my %dat = ( 
-     driver => 'mysql',
-     dbname => 'sakila',
-     user => 'username',
-     password => 'pass'
-  );
-
-This is much more high-level.
-
-So, the first win is that you get to be DWIM instead of DWIS.
-
-
-=head3 Robust
-
-This module is robust. It uses L<Params::Validate> to make sure that
-what you supply is valid.
-
-=head2 Easier interaction with APIs
-
-=head3 Rose::DB::register_db() expects sub-components of a DSN
-
-If you take a look at a call to C<register_db>:
-
-L<http://search.cpan.org/~jsiracusa/Rose-DB-0.758/lib/Rose/DB/Tutorial.pod#Just_one_data_source>
-
-you will notice that it requires the sub-components of the DSN. So, 
-ideally you would be able to keep your connection data as a set of
-sub-components and supply it to L<Rose::DB> but when you want to connect
-directly to L<DBI>, you could do that also.
-
-This module is the solution for this dilemma as well.
-
-=head3 Alzabo and DBIx::AnyDBD have alternative connection syntaxes
-
-Alternative connection syntaxes such as L<DBIx::AnyDBD> or 
-L<Alzabo> can make use of the C<connect_data> API call
-
-
-=head1 API
-
-=head2 $dbh = connect(%params)
-
-C<%params> requires the following as keys:
-
-=over 4
-
-=item * driver : the value matches /\a(mysql|Pg)\Z/ (case-sensitive).
-
-=item * dbname : the value is the name of the database to connect to
+Instead of a bunch of string twiddling.
 
 =back
 
-C<%params> can have the following optional parameters
+=head1 METHODS
 
-=over 4
+=head1 Legacy Version
 
-=item * user
-
-=item * password
-
-=item * host
-
-=item * port
-
-=back
-
-C<%params> can also have parameters specific to a particular database
-driver. See
-L<DBIx::DBH::Sybase>,
-L<DBIx::DBH::mysql> and L<DBIx::DBH::Pg> for additional parameters
-acceptable based on database driver.
-
-=head2 ($dsn, $user, $pass, $attr) = connect_data(%params)
-
-C<connect_data> takes the same arguments as C<connect()> but returns
-a list of the 4 arguments required by the L<DBI> C<connect()>
-function. This is useful for working with modules that have an
-alternative connection syntax such as L<DBIx::AnyDBD> or 
-L<Alzabo>.
-
-=head2 $dsn = form_dsn(%params)
-
-C<form_dsn> takes the same arguments as C<connect()> but returns
-only the properly formatted DSN string. This is also 
-useful for working with modules that have an
-alternative connection syntax such as L<DBIx::AnyDBD> or 
-L<Alzabo>.
-
-=head1 ADDING A DRIVER
-
-Simply add a new driver with a name of C<DBIx::DBH::$Driver>, where
-C<$Driver> is a valid DBI driver name.
-
-=back
+A procedural version of DBIx::DBH is still available as
+L<DBIx::DBH::Legacy>.
 
 =head1 SEE ALSO
 
