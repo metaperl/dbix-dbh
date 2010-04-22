@@ -24,9 +24,19 @@ sub dsn_string {
   $dsn;
 }
 
-sub connect_data {
+sub for_dbi {
   my($self)=@_;
   ($self->dsn_string, $self->username, $self->password, $self->attr);
+}
+
+sub for_rose_db {
+  my($self)=@_;
+
+  (
+   username => $self->username,
+   password => $self->password,
+   %{$self->dsn}
+  )
 }
 
 sub dbh {
@@ -34,7 +44,7 @@ sub dbh {
 
   use DBI;
 
-  my $dbh = DBI->connect($self->connect_data)
+  my $dbh = DBI->connect($self->for_dbi)
 }
 
 sub conn {
@@ -42,7 +52,7 @@ sub conn {
 
   require DBIx::Connector;
 
-  my $dbh = DBIx::Connector->new($self->connect_data);
+  my $dbh = DBIx::Connector->new($self->for_dbi);
 
 }
 
@@ -139,36 +149,6 @@ L<DBIx::DBH::Legacy>.
 L<http://perlmonks.org/?node_id=835894>
 
 
-=head1 TODO
-
-=over
-
-=item * use a singleton object
-
-The current API for DBIx::DBH requires passing in the connection data 
-hash to each API function. The data hash should be bound to a singleton
-object and all methods should resource it.
-
-A good set of L<Moose> roles inspired by L<MooseX::Role::DBIx::Connector>
-or L<DBIx::Roles> might be in order.
-
-=item * use DBIx::Connector
-
-L<DBIx::Connector> is an excellent module for reusing DBI database connections.
-This module should optionally connect to DBI via that instead of directly.
-
-=item * expose parm validation info:
-
- > 
- > It would be nice if the parameter validation info was exposed in some 
- > way, so that an interactive piece of software can ask a user which 
- > driver they want, then query your module for a list of supported 
- > parameters, then ask the user to fill them in. (Perhaps move the hash 
- > of validation parameters to a new method named valid_params, and then 
- > have connect_data call that method and pass the return value to 
- > validate?)
-
-=cut
 
 =head1 AUTHOR
 
