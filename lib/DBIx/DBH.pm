@@ -33,7 +33,7 @@ sub for_dbi {
 }
 
 
-sub for_skinny_setup {
+sub for_skinny {
   my($self)=@_;
   (
    dsn => $self->dsn_string, 
@@ -96,6 +96,7 @@ __END__
      attr => { RaiseError => 1 }
    );
 
+ $config->for_skinny ; # outputs data structure for DBIx::Skinny setup
  $config->for_rose_db; # outputs data structure for Rose::DB::register_db
  $config->for_dbi;     # outputs data structure for DBI connect()
  $config->dbh;  # makes a database connection with DBI
@@ -115,6 +116,20 @@ L<Rose::DB::Tutorial/Registering_data_sources> shows that L<Rose::DB>
 expects the dsn information as discrete key-value pairs as opposed to
 a string. The C<< ->for_rose_db >> method takes the DBIx::DBH instance
 and returns a hash array which can be consumed by L<Rose::DB/register_db>
+
+NOTE: A working example for using DBIx::DBH to connect in 
+L<Rose::DB::Object> is L<here|http://github.com/metaperl/dbix-cookbook/blob/master/lib/DBIx/Cookbook/RDBO/RoseDB.pm>
+
+
+=item * working with DBIx:Skinny
+
+Unless you pass in a living, breathing L<DBI> database handle,
+L<DBIx::Skinny> expects the connection information to be passed in
+key-value pairs. The C<< ->for_skinny >> addresses this API demand.
+
+NOTE: A working example for using DBIx::DBH to connect in
+L<DBIx::Skinny> is L<here|http://github.com/metaperl/dbix-cookbook/blob/master/lib/DBIx/Cookbook/Skinny/Sakila.pm#L15>
+
 
 =item * programmatic connection attempts
 
