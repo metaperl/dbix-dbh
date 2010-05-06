@@ -120,11 +120,11 @@ __END__
 
 =head1 NAME
 
- DBIx::DBH - helper for DBI connection data (form dsn, etc)
+ DBIx::DBH::Legacy - legacy helper for DBI connection data (form dsn, etc)
 
 =head1 SYNOPSIS
 
- use DBIx::DBH;
+ use DBIx::DBH::Legacy;
 
  my %opt = (tty => 1) ;
  my %dat = ( 
@@ -134,11 +134,11 @@ __END__
      password => 'markso'
  );
 
- my $dbh = DBIx::DBH->connect(%dat, %opt) ; # yes, two hashes, not hrefs!
+ my $dbh = DBIx::DBH::Legacy->connect(%dat, %opt) ; # yes, two hashes, not hrefs!
 
 =head1 ABSTRACT
 
-L<DBIx::DBH> is designed to facilitate and validate the process of creating 
+L<DBIx::DBH::Legacy> is designed to facilitate and validate the process of creating 
 L<DBI> database connections.
 It's chief and unique contribution to this set of modules on CPAN is that
 it forms the DSN string for you, regardless of database driver. Another thing 
@@ -149,7 +149,7 @@ and or config file information into DBI database handles. It also can form
 DSN strings for both major free databases and is subclassed to support
 extension for other databases.
 
-DBIx::DBH provides rigorous validation on the input parameters via
+DBIx::DBH::Legacy provides rigorous validation on the input parameters via
 L<Params::Validate>. It does not
 allow parameters which are not defined by the DBI or the database driver
 driver into the hash.
@@ -257,8 +257,8 @@ C<%params> can have the following optional parameters
 
 C<%params> can also have parameters specific to a particular database
 driver. See
-L<DBIx::DBH::Sybase>,
-L<DBIx::DBH::mysql> and L<DBIx::DBH::Pg> for additional parameters
+L<DBIx::DBH::Legacy::Sybase>,
+L<DBIx::DBH::Legacy::mysql> and L<DBIx::DBH::Legacy::Pg> for additional parameters
 acceptable based on database driver.
 
 =head2 ($dsn, $user, $pass, $attr) = connect_data(%params)
@@ -279,7 +279,7 @@ L<Alzabo>.
 
 =head1 ADDING A DRIVER
 
-Simply add a new driver with a name of C<DBIx::DBH::$Driver>, where
+Simply add a new driver with a name of C<DBIx::DBH::Legacy::$Driver>, where
 C<$Driver> is a valid DBI driver name.
 
 =back
@@ -311,7 +311,7 @@ L<http://perlmonks.org/?node_id=835894>
 
 =item * use a singleton object
 
-The current API for DBIx::DBH requires passing in the connection data 
+The current API for DBIx::DBH::Legacy requires passing in the connection data 
 hash to each API function. The data hash should be bound to a singleton
 object and all methods should resource it.
 
@@ -350,7 +350,7 @@ Mark Stosberg did all of the following:
 
 =item * fixed a documentation bug
 
-=item * made DBIx::DBH more scaleable
+=item * made DBIx::DBH::Legacy more scaleable
 
 Says Mark: "Just as DBI needs no modifications for a new driver to work,
 neither should this module.
@@ -362,7 +362,7 @@ driver, or dies with a related error message.
 
 This could lower your own maintenance effort, as others can publish
 additional drivers directly without requiring a new release of
-DBIx::DBH for it to work."
+DBIx::DBH::Legacy for it to work."
 
 L<http://rt.cpan.org/Ticket/Display.html?id=18026>
 

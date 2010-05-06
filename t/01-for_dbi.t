@@ -17,7 +17,7 @@ my $config = DBIx::DBH->new
 
 my @connect_data = $config->for_dbi;
 
-is (shift @connect_data, "dbi:mysql;database=red;port=3306", 'form-dsn');
+is (shift @connect_data, "dbi:mysql:database=red;port=3306", 'form-dsn');
 is (shift @connect_data, "bill", 'username');
 is (shift @connect_data, "smith", 'password');
 is_deeply (shift @connect_data, { RaiseError => 1 } , 'attrs');

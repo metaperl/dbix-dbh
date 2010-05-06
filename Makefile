@@ -13,7 +13,7 @@
 
 #     BUILD_REQUIRES => {  }
 #     NAME => q[DBIx::DBH]
-#     PREREQ_PM => { Params::Validate=>q[0.7], DBI=>q[1.3] }
+#     PREREQ_PM => { Params::Validate=>q[0.7], Moose=>q[1], DBI=>q[1.3] }
 #     VERSION_FROM => q[lib/DBIx/DBH.pm]
 
 # --- MakeMaker post_initialize section:
@@ -519,6 +519,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '    ExtUtils::MakeMaker:  0' >> META_new.yml
 	$(NOECHO) $(ECHO) 'requires:' >> META_new.yml
 	$(NOECHO) $(ECHO) '    DBI:               1.3' >> META_new.yml
+	$(NOECHO) $(ECHO) '    Moose:             1' >> META_new.yml
 	$(NOECHO) $(ECHO) '    Params::Validate:  0.7' >> META_new.yml
 	$(NOECHO) $(ECHO) 'no_index:' >> META_new.yml
 	$(NOECHO) $(ECHO) '    directory:' >> META_new.yml
@@ -823,6 +824,7 @@ ppd :
 	$(NOECHO) $(ECHO) '    <AUTHOR></AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="DBI::" VERSION="1.3" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Moose::" VERSION="1" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Params::Validate" VERSION="0.7" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i486-linux-gnu-thread-multi-5.10" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd

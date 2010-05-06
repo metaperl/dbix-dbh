@@ -1,5 +1,7 @@
 package DBIx::DBH;
 
+our $VERSION = '0.4';
+
 use Moose;
 use Moose::Util::TypeConstraints;
 use DBI;
@@ -8,7 +10,7 @@ has [ 'username', 'password' ] => (is => 'rw', isa => 'Str');
 
 subtype 'DSNHashRef'  => as 'HashRef'  => where { defined($_->{driver}) };
 
-has 'dsn'  => (is => 'rw', isa => 'DSNHashRef', required => 1);
+has 'dsn'  => (is => 'rw', isa => 'DSNHashRef');
 has 'attr' => (is => 'rw', isa => 'HashRef');
 
 
@@ -19,7 +21,8 @@ sub dsn_string {
   my $driver = delete($dsn{driver});
   my $dsn = "dbi:$driver";
 
-  $dsn .= ";$_=$dsn{$_}"  for ( sort keys %dsn );
+  my $extra = join ';', map { sprintf "%s=%s", $_, $dsn{$_} } (sort keys %dsn) ;
+  length($extra) and $dsn = "$dsn:$extra";
 
   $dsn;
 }
@@ -27,6 +30,16 @@ sub dsn_string {
 sub for_dbi {
   my($self)=@_;
   ($self->dsn_string, $self->username, $self->password, $self->attr);
+}
+
+
+sub for_skinny_setup {
+  my($self)=@_;
+  (
+   dsn => $self->dsn_string, 
+   username => $self->username, 
+   password => $self->password
+   );
 }
 
 sub for_rose_db {
@@ -57,7 +70,7 @@ sub conn {
 }
 
 
-our $VERSION = '0.3';
+
 
 
 
@@ -115,7 +128,8 @@ most data from these modules comes back directly as hashes. So you have
 a more direct way of shuttling data into a database connection if you 
 use this module:
 
-   my $dbh = DBIx::DBH->(dsn => $cgi->form_data->{dsn})->dbh;
+   my $dbh = DBIx::DBH->(map { $_ => $cgi->param($_) } 
+                 grep(/dsn|user|pass/, keys %{$cgi->Vars})->dbh;
 
 Instead of a bunch of string twiddling.
 
@@ -127,6 +141,15 @@ Instead of a bunch of string twiddling.
 
 A procedural version of DBIx::DBH is still available as
 L<DBIx::DBH::Legacy>.
+
+=head1 An example extension
+
+The file F<DBH.pm> in L<DBIx::Cookbook> is an example of deriving a connection
+class from DBIx::DBH -
+
+L<http://github.com/metaperl/dbix-cookbook/blob/master/lib/DBIx/Cookbook/DBH.pm>
+
+
 
 =head1 SEE ALSO
 
@@ -152,41 +175,11 @@ L<http://perlmonks.org/?node_id=835894>
 
 =head1 AUTHOR
 
-Terrence Brannon, E<lt>bauhaus@metaperl.comE<gt>
+Terrence Brannon, C<< metaperl@gmail.com >>
 
-Sybase support contributed by Rachel Richard.
+thanks to Khisanth, Possum and DrForr on #perl-help
 
-Mark Stosberg did all of the following:
-
-=over
-
-=item * contributed Sqlite support
-
-=item * fixed a documentation bug
-
-=item * made DBIx::DBH more scaleable
-
-Says Mark: "Just as DBI needs no modifications for a new driver to work,
-neither should this module.
-
-I've attached a patch which refactors the code to address this.
-
-Rather than relying on a hardcoded list, it tries to 'require' the
-driver, or dies with a related error message.
-
-This could lower your own maintenance effort, as others can publish
-additional drivers directly without requiring a new release of
-DBIx::DBH for it to work."
-
-L<http://rt.cpan.org/Ticket/Display.html?id=18026>
-
-=back
-
-
-
-Substantial suggestions by M. Simon Ryan Cavaletto.
-
-=head1 SOURCECODE
+=head2 SOURCE CODE REPO
 
 L<http://github.com/metaperl/dbix-dbh>
 
@@ -200,3 +193,4 @@ at your option, any later version of Perl 5 you may have available.
 
 
 =cut
+
