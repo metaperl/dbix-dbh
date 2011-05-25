@@ -143,7 +143,7 @@ most data from these modules comes back directly as hashes. So you have
 a more direct way of shuttling data into a database connection if you 
 use this module:
 
-   my $dbh = DBIx::DBH->(map { $_ => $cgi->param($_) } 
+   my $dbh = DBIx::DBH->new(map { $_ => $cgi->param($_) } 
                  grep(/dsn|user|pass/, keys %{$cgi->Vars})->dbh;
 
 Instead of a bunch of string twiddling.
