@@ -1,6 +1,6 @@
 package DBIx::DBH;
 
-our $VERSION = '0.4';
+our $VERSION = '0.5';
 
 use Moose;
 use Moose::Util::TypeConstraints;
