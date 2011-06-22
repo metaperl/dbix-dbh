@@ -21,35 +21,35 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /usr/lib/perl/5.10/Config.pm).
+# These definitions are from config.sh (via C:/strawberry/perl/lib/Config.pm).
 # They may have been overridden via Makefile.PL or on the command line.
 AR = ar
-CC = cc
-CCCDLFLAGS = -fPIC
-CCDLFLAGS = -Wl,-E
-DLEXT = so
-DLSRC = dl_dlopen.xs
-EXE_EXT = 
-FULL_AR = /usr/bin/ar
-LD = cc
-LDDLFLAGS = -shared -O2 -g -L/usr/local/lib
-LDFLAGS =  -L/usr/local/lib
-LIBC = /lib/libc-2.10.1.so
+CC = gcc
+CCCDLFLAGS =  
+CCDLFLAGS =  
+DLEXT = dll
+DLSRC = dl_win32.xs
+EXE_EXT = .exe
+FULL_AR = 
+LD = g++
+LDDLFLAGS = -mdll -s -L"C:\strawberry\perl\lib\CORE" -L"C:\strawberry\c\lib"
+LDFLAGS = -s -L"C:\strawberry\perl\lib\CORE" -L"C:\strawberry\c\lib"
+LIBC = 
 LIB_EXT = .a
 OBJ_EXT = .o
-OSNAME = linux
-OSVERS = 2.6.24-23-server
-RANLIB = :
-SITELIBEXP = /usr/local/share/perl/5.10.0
-SITEARCHEXP = /usr/local/lib/perl/5.10.0
-SO = so
-VENDORARCHEXP = /usr/lib/perl5
-VENDORLIBEXP = /usr/share/perl5
+OSNAME = MSWin32
+OSVERS = 5.1
+RANLIB = rem
+SITELIBEXP = C:\strawberry\perl\site\lib
+SITEARCHEXP = C:\strawberry\perl\site\lib
+SO = dll
+VENDORARCHEXP = C:\strawberry\perl\vendor\lib
+VENDORLIBEXP = C:\strawberry\perl\vendor\lib
 
 
 # --- MakeMaker constants section:
 AR_STATIC_ARGS = cr
-DIRFILESEP = /
+DIRFILESEP = \\
 DFSEP = $(DIRFILESEP)
 NAME = DBIx::DBH
 NAME_SYM = DBIx_DBH
@@ -60,66 +60,66 @@ DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
 XS_VERSION = 0.4
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
-INST_ARCHLIB = blib/arch
-INST_SCRIPT = blib/script
-INST_BIN = blib/bin
-INST_LIB = blib/lib
-INST_MAN1DIR = blib/man1
-INST_MAN3DIR = blib/man3
-MAN1EXT = 1p
-MAN3EXT = 3pm
+INST_ARCHLIB = blib\arch
+INST_SCRIPT = blib\script
+INST_BIN = blib\bin
+INST_LIB = blib\lib
+INST_MAN1DIR = blib\man1
+INST_MAN3DIR = blib\man3
+MAN1EXT = 1
+MAN3EXT = 3
 INSTALLDIRS = site
 DESTDIR = 
 PREFIX = $(SITEPREFIX)
-PERLPREFIX = /usr
-SITEPREFIX = /usr/local
-VENDORPREFIX = /usr
-INSTALLPRIVLIB = /usr/share/perl/5.10
+PERLPREFIX = C:\strawberry\perl
+SITEPREFIX = C:\strawberry\perl\site
+VENDORPREFIX = C:\strawberry\perl\vendor
+INSTALLPRIVLIB = C:\strawberry\perl\lib
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = /usr/local/share/perl/5.10.0
+INSTALLSITELIB = C:\strawberry\perl\site\lib
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
-INSTALLVENDORLIB = /usr/share/perl5
+INSTALLVENDORLIB = C:\strawberry\perl\vendor\lib
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = /usr/lib/perl/5.10
+INSTALLARCHLIB = C:\strawberry\perl\lib
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = /usr/local/lib/perl/5.10.0
+INSTALLSITEARCH = C:\strawberry\perl\site\lib
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
-INSTALLVENDORARCH = /usr/lib/perl5
+INSTALLVENDORARCH = C:\strawberry\perl\vendor\lib
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
-INSTALLBIN = /usr/bin
+INSTALLBIN = C:\strawberry\perl\bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
-INSTALLSITEBIN = /usr/local/bin
+INSTALLSITEBIN = C:\strawberry\perl\site\bin
 DESTINSTALLSITEBIN = $(DESTDIR)$(INSTALLSITEBIN)
-INSTALLVENDORBIN = /usr/bin
+INSTALLVENDORBIN = C:\strawberry\perl\bin
 DESTINSTALLVENDORBIN = $(DESTDIR)$(INSTALLVENDORBIN)
-INSTALLSCRIPT = /usr/bin
+INSTALLSCRIPT = C:\strawberry\perl\bin
 DESTINSTALLSCRIPT = $(DESTDIR)$(INSTALLSCRIPT)
-INSTALLSITESCRIPT = /usr/local/bin
+INSTALLSITESCRIPT = C:\strawberry\perl\site\bin
 DESTINSTALLSITESCRIPT = $(DESTDIR)$(INSTALLSITESCRIPT)
-INSTALLVENDORSCRIPT = /usr/bin
+INSTALLVENDORSCRIPT = C:\strawberry\perl\bin
 DESTINSTALLVENDORSCRIPT = $(DESTDIR)$(INSTALLVENDORSCRIPT)
-INSTALLMAN1DIR = /usr/share/man/man1
+INSTALLMAN1DIR = none
 DESTINSTALLMAN1DIR = $(DESTDIR)$(INSTALLMAN1DIR)
-INSTALLSITEMAN1DIR = /usr/local/man/man1
+INSTALLSITEMAN1DIR = $(INSTALLMAN1DIR)
 DESTINSTALLSITEMAN1DIR = $(DESTDIR)$(INSTALLSITEMAN1DIR)
-INSTALLVENDORMAN1DIR = /usr/share/man/man1
+INSTALLVENDORMAN1DIR = $(INSTALLMAN1DIR)
 DESTINSTALLVENDORMAN1DIR = $(DESTDIR)$(INSTALLVENDORMAN1DIR)
-INSTALLMAN3DIR = /usr/share/man/man3
+INSTALLMAN3DIR = none
 DESTINSTALLMAN3DIR = $(DESTDIR)$(INSTALLMAN3DIR)
-INSTALLSITEMAN3DIR = /usr/local/man/man3
+INSTALLSITEMAN3DIR = $(INSTALLMAN3DIR)
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
-INSTALLVENDORMAN3DIR = /usr/share/man/man3
+INSTALLVENDORMAN3DIR = $(INSTALLMAN3DIR)
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /usr/share/perl/5.10
-PERL_ARCHLIB = /usr/lib/perl/5.10
+PERL_LIB = C:\strawberry\perl\lib
+PERL_ARCHLIB = C:\strawberry\perl\lib
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /usr/lib/perl/5.10/CORE
-PERL = /usr/bin/perl
-FULLPERL = /usr/bin/perl
+PERL_INC = C:\strawberry\perl\lib\CORE
+PERL = C:\strawberry\perl\bin\perl.exe
+FULLPERL = C:\strawberry\perl\bin\perl.exe
 ABSPERL = $(PERL)
 PERLRUN = $(PERL)
 FULLPERLRUN = $(FULLPERL)
@@ -132,7 +132,7 @@ PERM_DIR = 755
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /usr/local/share/perl/5.10.0/ExtUtils/MakeMaker.pm
+MAKEMAKER   = C:/strawberry/perl/lib/ExtUtils/MakeMaker.pm
 MM_VERSION  = 6.56
 MM_REVISION = 65600
 
@@ -140,8 +140,8 @@ MM_REVISION = 65600
 # BASEEXT = Basename part of FULLEXT. May be just equal FULLEXT. (eg Oracle)
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
-MAKE = make
-FULLEXT = DBIx/DBH
+MAKE = dmake
+FULLEXT = DBIx\DBH
 BASEEXT = DBH
 PARENT_NAME = DBIx
 DLBASE = $(BASEEXT)
@@ -157,31 +157,25 @@ C_FILES  =
 O_FILES  = 
 H_FILES  = 
 MAN1PODS = 
-MAN3PODS = ANNOUNCE-FACTOR.pod \
-	lib/DBIx/DBH.pm \
-	lib/DBIx/DBH/Legacy.pm \
-	lib/DBIx/DBH/Pg.pm \
-	lib/DBIx/DBH/SQLite.pm \
-	lib/DBIx/DBH/Sybase.pm \
-	lib/DBIx/DBH/mysql.pm
+MAN3PODS = 
 
 # Where is the Config information that we are using/depend on
 CONFIGDEP = $(PERL_ARCHLIB)$(DFSEP)Config.pm $(PERL_INC)$(DFSEP)config.h
 
 # Where to build things
-INST_LIBDIR      = $(INST_LIB)/DBIx
-INST_ARCHLIBDIR  = $(INST_ARCHLIB)/DBIx
+INST_LIBDIR      = $(INST_LIB)\DBIx
+INST_ARCHLIBDIR  = $(INST_ARCHLIB)\DBIx
 
-INST_AUTODIR     = $(INST_LIB)/auto/$(FULLEXT)
-INST_ARCHAUTODIR = $(INST_ARCHLIB)/auto/$(FULLEXT)
+INST_AUTODIR     = $(INST_LIB)\auto\$(FULLEXT)
+INST_ARCHAUTODIR = $(INST_ARCHLIB)\auto\$(FULLEXT)
 
 INST_STATIC      = 
 INST_DYNAMIC     = 
 INST_BOOT        = 
 
 # Extra linker info
-EXPORT_LIST        = 
-PERL_ARCHIVE       = 
+EXPORT_LIST        = $(BASEEXT).def
+PERL_ARCHIVE       = $(PERL_INC)\libperl512.a
 PERL_ARCHIVE_AFTER = 
 
 
@@ -194,29 +188,28 @@ TO_INST_PM = ANNOUNCE-FACTOR.pod \
 	lib/DBIx/DBH/mysql.pm
 
 PM_TO_BLIB = lib/DBIx/DBH.pm \
-	blib/lib/DBIx/DBH.pm \
+	blib\lib\DBIx\DBH.pm \
 	lib/DBIx/DBH/SQLite.pm \
-	blib/lib/DBIx/DBH/SQLite.pm \
+	blib\lib\DBIx\DBH\SQLite.pm \
 	lib/DBIx/DBH/Pg.pm \
-	blib/lib/DBIx/DBH/Pg.pm \
+	blib\lib\DBIx\DBH\Pg.pm \
 	ANNOUNCE-FACTOR.pod \
-	$(INST_LIB)/DBIx/ANNOUNCE-FACTOR.pod \
-	lib/DBIx/DBH/mysql.pm \
-	blib/lib/DBIx/DBH/mysql.pm \
+	$(INST_LIB)\DBIx\ANNOUNCE-FACTOR.pod \
 	lib/DBIx/DBH/Sybase.pm \
-	blib/lib/DBIx/DBH/Sybase.pm \
+	blib\lib\DBIx\DBH\Sybase.pm \
+	lib/DBIx/DBH/mysql.pm \
+	blib\lib\DBIx\DBH\mysql.pm \
 	lib/DBIx/DBH/Legacy.pm \
-	blib/lib/DBIx/DBH/Legacy.pm
+	blib\lib\DBIx\DBH\Legacy.pm
 
 
 # --- MakeMaker platform_constants section:
-MM_Unix_VERSION = 6.56
-PERL_MALLOC_DEF = -DPERL_EXTMALLOC_DEF -Dmalloc=Perl_malloc -Dfree=Perl_mfree -Drealloc=Perl_realloc -Dcalloc=Perl_calloc
+MM_Win32_VERSION = 6.56
 
 
 # --- MakeMaker tool_autosplit section:
 # Usage: $(AUTOSPLITFILE) FileToSplit AutoDirToSplitInto
-AUTOSPLITFILE = $(ABSPERLRUN)  -e 'use AutoSplit;  autosplit($$ARGV[0], $$ARGV[1], 0, 1, 1)' --
+AUTOSPLITFILE = $(ABSPERLRUN)  -e "use AutoSplit;  autosplit($$ARGV[0], $$ARGV[1], 0, 1, 1)" --
 
 
 
@@ -224,34 +217,33 @@ AUTOSPLITFILE = $(ABSPERLRUN)  -e 'use AutoSplit;  autosplit($$ARGV[0], $$ARGV[1
 
 
 # --- MakeMaker tools_other section:
-SHELL = /bin/sh
-CHMOD = chmod
-CP = cp
-MV = mv
-NOOP = $(TRUE)
+CHMOD = $(ABSPERLRUN) -MExtUtils::Command -e "chmod" --
+CP = $(ABSPERLRUN) -MExtUtils::Command -e "cp" --
+MV = $(ABSPERLRUN) -MExtUtils::Command -e "mv" --
+NOOP = rem
 NOECHO = @
-RM_F = rm -f
-RM_RF = rm -rf
-TEST_F = test -f
-TOUCH = touch
+RM_F = $(ABSPERLRUN) -MExtUtils::Command -e "rm_f" --
+RM_RF = $(ABSPERLRUN) -MExtUtils::Command -e "rm_rf" --
+TEST_F = $(ABSPERLRUN) -MExtUtils::Command -e "test_f" --
+TOUCH = $(ABSPERLRUN) -MExtUtils::Command -e "touch" --
 UMASK_NULL = umask 0
-DEV_NULL = > /dev/null 2>&1
-MKPATH = $(ABSPERLRUN) -MExtUtils::Command -e 'mkpath' --
-EQUALIZE_TIMESTAMP = $(ABSPERLRUN) -MExtUtils::Command -e 'eqtime' --
-FALSE = false
-TRUE = true
-ECHO = echo
-ECHO_N = echo -n
+DEV_NULL = > NUL
+MKPATH = $(ABSPERLRUN) -MExtUtils::Command -e "mkpath" --
+EQUALIZE_TIMESTAMP = $(ABSPERLRUN) -MExtUtils::Command -e "eqtime" --
+FALSE = $(ABSPERLRUN)  -e "exit 1" --
+TRUE = $(ABSPERLRUN)  -e "exit 0" --
+ECHO = $(ABSPERLRUN) -l -e "print qq{{@ARGV}" --
+ECHO_N = $(ABSPERLRUN)  -e "print qq{{@ARGV}" --
 UNINST = 0
 VERBINST = 0
-MOD_INSTALL = $(ABSPERLRUN) -MExtUtils::Install -e 'install([ from_to => {@ARGV}, verbose => '\''$(VERBINST)'\'', uninstall_shadows => '\''$(UNINST)'\'', dir_mode => '\''$(PERM_DIR)'\'' ]);' --
-DOC_INSTALL = $(ABSPERLRUN) -MExtUtils::Command::MM -e 'perllocal_install' --
-UNINSTALL = $(ABSPERLRUN) -MExtUtils::Command::MM -e 'uninstall' --
-WARN_IF_OLD_PACKLIST = $(ABSPERLRUN) -MExtUtils::Command::MM -e 'warn_if_old_packlist' --
+MOD_INSTALL = $(ABSPERLRUN) -MExtUtils::Install -e "install([ from_to => {{@ARGV}, verbose => '$(VERBINST)', uninstall_shadows => '$(UNINST)', dir_mode => '$(PERM_DIR)' ]);" --
+DOC_INSTALL = $(ABSPERLRUN) -MExtUtils::Command::MM -e "perllocal_install" --
+UNINSTALL = $(ABSPERLRUN) -MExtUtils::Command::MM -e "uninstall" --
+WARN_IF_OLD_PACKLIST = $(ABSPERLRUN) -MExtUtils::Command::MM -e "warn_if_old_packlist" --
 MACROSTART = 
 MACROEND = 
 USEMAKEFILE = -f
-FIXIN = $(ABSPERLRUN) -MExtUtils::MY -e 'MY->fixin(shift)' --
+FIXIN = pl2bat.bat
 
 
 # --- MakeMaker makemakerdflt section:
@@ -297,17 +289,14 @@ DISTVNAME = DBIx-DBH-0.4
 
 
 # --- MakeMaker pasthru section:
-
-PASTHRU = LIBPERL_A="$(LIBPERL_A)"\
-	LINKTYPE="$(LINKTYPE)"\
-	PREFIX="$(PREFIX)"
-
+PASTHRU = 
 
 # --- MakeMaker special_targets section:
 .SUFFIXES : .xs .c .C .cpp .i .s .cxx .cc $(OBJ_EXT)
 
 .PHONY: all config static dynamic test linkext manifest blibdirs clean realclean disttest distdir
 
+.USESHELL :
 
 
 # --- MakeMaker c_o section:
@@ -320,7 +309,7 @@ PASTHRU = LIBPERL_A="$(LIBPERL_A)"\
 
 
 # --- MakeMaker top_targets section:
-all :: pure_all manifypods
+all :: pure_all
 	$(NOECHO) $(NOOP)
 
 
@@ -395,6 +384,10 @@ linkext :: $(LINKTYPE)
 
 # --- MakeMaker dlsyms section:
 
+DBH.def: Makefile.PL
+	$(PERLRUN) -MExtUtils::Mksymlists \
+     -e "Mksymlists('NAME'=>\"DBIx::DBH\", 'DLBASE' => '$(BASEEXT)', 'DL_FUNCS' => {  }, 'FUNCLIST' => [], 'IMPORTS' => {  }, 'DL_VARS' => []);"
+
 
 # --- MakeMaker dynamic section:
 
@@ -427,22 +420,8 @@ POD2MAN_EXE = $(PERLRUN) "-MExtUtils::Command::MM" -e pod2man "--"
 POD2MAN = $(POD2MAN_EXE)
 
 
-manifypods : pure_all  \
-	lib/DBIx/DBH.pm \
-	lib/DBIx/DBH/SQLite.pm \
-	lib/DBIx/DBH/Pg.pm \
-	ANNOUNCE-FACTOR.pod \
-	lib/DBIx/DBH/mysql.pm \
-	lib/DBIx/DBH/Sybase.pm \
-	lib/DBIx/DBH/Legacy.pm
-	$(NOECHO) $(POD2MAN) --section=3 --perm_rw=$(PERM_RW) \
-	  lib/DBIx/DBH.pm $(INST_MAN3DIR)/DBIx::DBH.$(MAN3EXT) \
-	  lib/DBIx/DBH/SQLite.pm $(INST_MAN3DIR)/DBIx::DBH::SQLite.$(MAN3EXT) \
-	  lib/DBIx/DBH/Pg.pm $(INST_MAN3DIR)/DBIx::DBH::Pg.$(MAN3EXT) \
-	  ANNOUNCE-FACTOR.pod $(INST_MAN3DIR)/DBIx::ANNOUNCE-FACTOR.$(MAN3EXT) \
-	  lib/DBIx/DBH/mysql.pm $(INST_MAN3DIR)/DBIx::DBH::mysql.$(MAN3EXT) \
-	  lib/DBIx/DBH/Sybase.pm $(INST_MAN3DIR)/DBIx::DBH::Sybase.$(MAN3EXT) \
-	  lib/DBIx/DBH/Legacy.pm $(INST_MAN3DIR)/DBIx::DBH::Legacy.$(MAN3EXT) 
+manifypods : pure_all 
+	$(NOECHO) $(NOOP)
 
 
 
@@ -470,13 +449,13 @@ clean_subdirs :
 clean :: clean_subdirs
 	- $(RM_F) \
 	  *$(LIB_EXT) core \
-	  core.[0-9] $(INST_ARCHAUTODIR)/extralibs.all \
-	  core.[0-9][0-9] $(BASEEXT).bso \
+	  core.[0-9] core.[0-9][0-9] \
+	  $(BASEEXT).bso $(INST_ARCHAUTODIR)\extralibs.ld \
 	  pm_to_blib.ts core.[0-9][0-9][0-9][0-9] \
 	  $(BASEEXT).x $(BOOTSTRAP) \
 	  perl$(EXE_EXT) tmon.out \
-	  *$(OBJ_EXT) pm_to_blib \
-	  $(INST_ARCHAUTODIR)/extralibs.ld blibdirs.ts \
+	  $(INST_ARCHAUTODIR)\extralibs.all *$(OBJ_EXT) \
+	  pm_to_blib blibdirs.ts \
 	  core.[0-9][0-9][0-9][0-9][0-9] *perl.core \
 	  core.*perl.*.? $(MAKE_APERL_FILE) \
 	  perl $(BASEEXT).def \
@@ -485,6 +464,7 @@ clean :: clean_subdirs
 	  perl.exe so_locations \
 	  $(BASEEXT).exp 
 	- $(RM_RF) \
+	  dll.exp dll.base \
 	  blib 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
 
@@ -506,29 +486,29 @@ realclean purge ::  clean realclean_subdirs
 # --- MakeMaker metafile section:
 metafile : create_distdir
 	$(NOECHO) $(ECHO) Generating META.yml
-	$(NOECHO) $(ECHO) '--- #YAML:1.0' > META_new.yml
-	$(NOECHO) $(ECHO) 'name:               DBIx-DBH' >> META_new.yml
-	$(NOECHO) $(ECHO) 'version:            0.4' >> META_new.yml
-	$(NOECHO) $(ECHO) 'abstract:           ~' >> META_new.yml
-	$(NOECHO) $(ECHO) 'author:  []' >> META_new.yml
-	$(NOECHO) $(ECHO) 'license:            unknown' >> META_new.yml
-	$(NOECHO) $(ECHO) 'distribution_type:  module' >> META_new.yml
-	$(NOECHO) $(ECHO) 'configure_requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '    ExtUtils::MakeMaker:  0' >> META_new.yml
-	$(NOECHO) $(ECHO) 'build_requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '    ExtUtils::MakeMaker:  0' >> META_new.yml
-	$(NOECHO) $(ECHO) 'requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '    DBI:               1.3' >> META_new.yml
-	$(NOECHO) $(ECHO) '    Moose:             1' >> META_new.yml
-	$(NOECHO) $(ECHO) '    Params::Validate:  0.7' >> META_new.yml
-	$(NOECHO) $(ECHO) 'no_index:' >> META_new.yml
-	$(NOECHO) $(ECHO) '    directory:' >> META_new.yml
-	$(NOECHO) $(ECHO) '        - t' >> META_new.yml
-	$(NOECHO) $(ECHO) '        - inc' >> META_new.yml
-	$(NOECHO) $(ECHO) 'generated_by:       ExtUtils::MakeMaker version 6.56' >> META_new.yml
-	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
-	$(NOECHO) $(ECHO) '    url:      http://module-build.sourceforge.net/META-spec-v1.4.html' >> META_new.yml
-	$(NOECHO) $(ECHO) '    version:  1.4' >> META_new.yml
+	$(NOECHO) $(ECHO) "--- #YAML:1.0" > META_new.yml
+	$(NOECHO) $(ECHO) "name:               DBIx-DBH" >> META_new.yml
+	$(NOECHO) $(ECHO) "version:            0.4" >> META_new.yml
+	$(NOECHO) $(ECHO) "abstract:           ~" >> META_new.yml
+	$(NOECHO) $(ECHO) "author:  []" >> META_new.yml
+	$(NOECHO) $(ECHO) "license:            unknown" >> META_new.yml
+	$(NOECHO) $(ECHO) "distribution_type:  module" >> META_new.yml
+	$(NOECHO) $(ECHO) "configure_requires:" >> META_new.yml
+	$(NOECHO) $(ECHO) "    ExtUtils::MakeMaker:  0" >> META_new.yml
+	$(NOECHO) $(ECHO) "build_requires:" >> META_new.yml
+	$(NOECHO) $(ECHO) "    ExtUtils::MakeMaker:  0" >> META_new.yml
+	$(NOECHO) $(ECHO) "requires:" >> META_new.yml
+	$(NOECHO) $(ECHO) "    DBI:               1.3" >> META_new.yml
+	$(NOECHO) $(ECHO) "    Moose:             1" >> META_new.yml
+	$(NOECHO) $(ECHO) "    Params::Validate:  0.7" >> META_new.yml
+	$(NOECHO) $(ECHO) "no_index:" >> META_new.yml
+	$(NOECHO) $(ECHO) "    directory:" >> META_new.yml
+	$(NOECHO) $(ECHO) "        - t" >> META_new.yml
+	$(NOECHO) $(ECHO) "        - inc" >> META_new.yml
+	$(NOECHO) $(ECHO) "generated_by:       ExtUtils::MakeMaker version 6.56" >> META_new.yml
+	$(NOECHO) $(ECHO) "meta-spec:" >> META_new.yml
+	$(NOECHO) $(ECHO) "    url:      http://module-build.sourceforge.net/META-spec-v1.4.html" >> META_new.yml
+	$(NOECHO) $(ECHO) "    version:  1.4" >> META_new.yml
 	-$(NOECHO) $(MV) META_new.yml $(DISTVNAME)/META.yml
 
 
@@ -558,8 +538,8 @@ veryclean : realclean
 # --- MakeMaker dist_core section:
 
 dist : $(DIST_DEFAULT) $(FIRST_MAKEFILE)
-	$(NOECHO) $(ABSPERLRUN) -l -e 'print '\''Warning: Makefile possibly out of date with $(VERSION_FROM)'\''' \
-	  -e '    if -e '\''$(VERSION_FROM)'\'' and -M '\''$(VERSION_FROM)'\'' < -M '\''$(FIRST_MAKEFILE)'\'';' --
+	$(NOECHO) $(ABSPERLRUN) -l -e "print 'Warning: Makefile possibly out of date with $(VERSION_FROM)'\
+    if -e '$(VERSION_FROM)' and -M '$(VERSION_FROM)' < -M '$(FIRST_MAKEFILE)';" --
 
 tardist : $(DISTVNAME).tar$(SUFFIX)
 	$(NOECHO) $(NOOP)
@@ -621,15 +601,15 @@ ci :
 
 # --- MakeMaker distmeta section:
 distmeta : create_distdir metafile
-	$(NOECHO) cd $(DISTVNAME) && $(ABSPERLRUN) -MExtUtils::Manifest=maniadd -e 'eval { maniadd({q{META.yml} => q{Module meta-data (added by MakeMaker)}}) } ' \
-	  -e '    or print "Could not add META.yml to MANIFEST: $${'\''@'\''}\n"' --
+	$(NOECHO) cd $(DISTVNAME) && $(ABSPERLRUN) -MExtUtils::Manifest=maniadd -e "eval {{ maniadd({{q{{META.yml} => q{{Module meta-data (added by MakeMaker)}}}) } \
+    or print \"Could not add META.yml to MANIFEST: $${{'@'}\n\"" --
 
 
 
 # --- MakeMaker distsignature section:
 distsignature : create_distdir
-	$(NOECHO) cd $(DISTVNAME) && $(ABSPERLRUN) -MExtUtils::Manifest=maniadd -e 'eval { maniadd({q{SIGNATURE} => q{Public-key signature (added by MakeMaker)}}) } ' \
-	  -e '    or print "Could not add SIGNATURE to MANIFEST: $${'\''@'\''}\n"' --
+	$(NOECHO) cd $(DISTVNAME) && $(ABSPERLRUN) -MExtUtils::Manifest=maniadd -e "eval {{ maniadd({{q{{SIGNATURE} => q{{Public-key signature (added by MakeMaker)}}}) } \
+    or print \"Could not add SIGNATURE to MANIFEST: $${{'@'}\n\"" --
 	$(NOECHO) cd $(DISTVNAME) && $(TOUCH) SIGNATURE
 	cd $(DISTVNAME) && cpansign -s
 
@@ -663,8 +643,8 @@ doc__install : doc_site_install
 
 pure_perl_install :: all
 	$(NOECHO) $(MOD_INSTALL) \
-		read $(PERL_ARCHLIB)/auto/$(FULLEXT)/.packlist \
-		write $(DESTINSTALLARCHLIB)/auto/$(FULLEXT)/.packlist \
+		read $(PERL_ARCHLIB)\auto\$(FULLEXT)\.packlist \
+		write $(DESTINSTALLARCHLIB)\auto\$(FULLEXT)\.packlist \
 		$(INST_LIB) $(DESTINSTALLPRIVLIB) \
 		$(INST_ARCHLIB) $(DESTINSTALLARCHLIB) \
 		$(INST_BIN) $(DESTINSTALLBIN) \
@@ -672,13 +652,13 @@ pure_perl_install :: all
 		$(INST_MAN1DIR) $(DESTINSTALLMAN1DIR) \
 		$(INST_MAN3DIR) $(DESTINSTALLMAN3DIR)
 	$(NOECHO) $(WARN_IF_OLD_PACKLIST) \
-		$(SITEARCHEXP)/auto/$(FULLEXT)
+		$(SITEARCHEXP)\auto\$(FULLEXT)
 
 
 pure_site_install :: all
 	$(NOECHO) $(MOD_INSTALL) \
-		read $(SITEARCHEXP)/auto/$(FULLEXT)/.packlist \
-		write $(DESTINSTALLSITEARCH)/auto/$(FULLEXT)/.packlist \
+		read $(SITEARCHEXP)\auto\$(FULLEXT)\.packlist \
+		write $(DESTINSTALLSITEARCH)\auto\$(FULLEXT)\.packlist \
 		$(INST_LIB) $(DESTINSTALLSITELIB) \
 		$(INST_ARCHLIB) $(DESTINSTALLSITEARCH) \
 		$(INST_BIN) $(DESTINSTALLSITEBIN) \
@@ -686,12 +666,12 @@ pure_site_install :: all
 		$(INST_MAN1DIR) $(DESTINSTALLSITEMAN1DIR) \
 		$(INST_MAN3DIR) $(DESTINSTALLSITEMAN3DIR)
 	$(NOECHO) $(WARN_IF_OLD_PACKLIST) \
-		$(PERL_ARCHLIB)/auto/$(FULLEXT)
+		$(PERL_ARCHLIB)\auto\$(FULLEXT)
 
 pure_vendor_install :: all
 	$(NOECHO) $(MOD_INSTALL) \
-		read $(VENDORARCHEXP)/auto/$(FULLEXT)/.packlist \
-		write $(DESTINSTALLVENDORARCH)/auto/$(FULLEXT)/.packlist \
+		read $(VENDORARCHEXP)\auto\$(FULLEXT)\.packlist \
+		write $(DESTINSTALLVENDORARCH)\auto\$(FULLEXT)\.packlist \
 		$(INST_LIB) $(DESTINSTALLVENDORLIB) \
 		$(INST_ARCHLIB) $(DESTINSTALLVENDORARCH) \
 		$(INST_BIN) $(DESTINSTALLVENDORBIN) \
@@ -708,7 +688,7 @@ doc_perl_install :: all
 		LINKTYPE "$(LINKTYPE)" \
 		VERSION "$(VERSION)" \
 		EXE_FILES "$(EXE_FILES)" \
-		>> $(DESTINSTALLARCHLIB)/perllocal.pod
+		>> $(DESTINSTALLARCHLIB)\perllocal.pod
 
 doc_site_install :: all
 	$(NOECHO) $(ECHO) Appending installation info to $(DESTINSTALLARCHLIB)/perllocal.pod
@@ -719,7 +699,7 @@ doc_site_install :: all
 		LINKTYPE "$(LINKTYPE)" \
 		VERSION "$(VERSION)" \
 		EXE_FILES "$(EXE_FILES)" \
-		>> $(DESTINSTALLARCHLIB)/perllocal.pod
+		>> $(DESTINSTALLARCHLIB)\perllocal.pod
 
 doc_vendor_install :: all
 	$(NOECHO) $(ECHO) Appending installation info to $(DESTINSTALLARCHLIB)/perllocal.pod
@@ -730,20 +710,20 @@ doc_vendor_install :: all
 		LINKTYPE "$(LINKTYPE)" \
 		VERSION "$(VERSION)" \
 		EXE_FILES "$(EXE_FILES)" \
-		>> $(DESTINSTALLARCHLIB)/perllocal.pod
+		>> $(DESTINSTALLARCHLIB)\perllocal.pod
 
 
 uninstall :: uninstall_from_$(INSTALLDIRS)dirs
 	$(NOECHO) $(NOOP)
 
 uninstall_from_perldirs ::
-	$(NOECHO) $(UNINSTALL) $(PERL_ARCHLIB)/auto/$(FULLEXT)/.packlist
+	$(NOECHO) $(UNINSTALL) $(PERL_ARCHLIB)\auto\$(FULLEXT)\.packlist
 
 uninstall_from_sitedirs ::
-	$(NOECHO) $(UNINSTALL) $(SITEARCHEXP)/auto/$(FULLEXT)/.packlist
+	$(NOECHO) $(UNINSTALL) $(SITEARCHEXP)\auto\$(FULLEXT)\.packlist
 
 uninstall_from_vendordirs ::
-	$(NOECHO) $(UNINSTALL) $(VENDORARCHEXP)/auto/$(FULLEXT)/.packlist
+	$(NOECHO) $(UNINSTALL) $(VENDORARCHEXP)\auto\$(FULLEXT)\.packlist
 
 
 # --- MakeMaker force section:
@@ -775,7 +755,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 
 # --- MakeMaker makeaperl section ---
 MAP_TARGET    = perl
-FULLPERL      = /usr/bin/perl
+FULLPERL      = C:\strawberry\perl\bin\perl.exe
 
 $(MAP_TARGET) :: static $(MAKE_APERL_FILE)
 	$(MAKE) $(USEMAKEFILE) $(MAKE_APERL_FILE) $@
@@ -805,10 +785,10 @@ subdirs-test ::
 
 
 test_dynamic :: pure_all
-	PERL_DL_NONLAZY=1 $(FULLPERLRUN) "-MExtUtils::Command::MM" "-e" "test_harness($(TEST_VERBOSE), '$(INST_LIB)', '$(INST_ARCHLIB)')" $(TEST_FILES)
+	$(FULLPERLRUN) "-MExtUtils::Command::MM" "-e" "test_harness($(TEST_VERBOSE), '$(INST_LIB)', '$(INST_ARCHLIB)')" $(TEST_FILES)
 
 testdb_dynamic :: pure_all
-	PERL_DL_NONLAZY=1 $(FULLPERLRUN) $(TESTDB_SW) "-I$(INST_LIB)" "-I$(INST_ARCHLIB)" $(TEST_FILE)
+	$(FULLPERLRUN) $(TESTDB_SW) "-I$(INST_LIB)" "-I$(INST_ARCHLIB)" $(TEST_FILE)
 
 test_ : test_dynamic
 
@@ -819,30 +799,30 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
-	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0.4">' > $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <ABSTRACT></ABSTRACT>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <AUTHOR></AUTHOR>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <REQUIRE NAME="DBI::" VERSION="1.3" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Moose::" VERSION="1" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Params::Validate" VERSION="0.7" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i486-linux-gnu-thread-multi-5.10" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "<SOFTPKG NAME=\"$(DISTNAME)\" VERSION=\"0.4\">" > $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "    <ABSTRACT></ABSTRACT>" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "    <AUTHOR></AUTHOR>" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "    <IMPLEMENTATION>" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "        <REQUIRE NAME=\"DBI::\" VERSION=\"1.3\" />" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "        <REQUIRE NAME=\"Moose::\" VERSION=\"1\" />" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "        <REQUIRE NAME=\"Params::Validate\" VERSION=\"0.7\" />" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "        <ARCHITECTURE NAME=\"MSWin32-x86-multi-thread-5.12\" />" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "        <CODEBASE HREF=\"\" />" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "    </IMPLEMENTATION>" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "</SOFTPKG>" >> $(DISTNAME).ppd
 
 
 # --- MakeMaker pm_to_blib section:
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
-	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  lib/DBIx/DBH.pm blib/lib/DBIx/DBH.pm \
-	  lib/DBIx/DBH/SQLite.pm blib/lib/DBIx/DBH/SQLite.pm \
-	  lib/DBIx/DBH/Pg.pm blib/lib/DBIx/DBH/Pg.pm \
-	  ANNOUNCE-FACTOR.pod $(INST_LIB)/DBIx/ANNOUNCE-FACTOR.pod \
-	  lib/DBIx/DBH/mysql.pm blib/lib/DBIx/DBH/mysql.pm \
-	  lib/DBIx/DBH/Sybase.pm blib/lib/DBIx/DBH/Sybase.pm \
-	  lib/DBIx/DBH/Legacy.pm blib/lib/DBIx/DBH/Legacy.pm 
+	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e "pm_to_blib({{@ARGV}, '$(INST_LIB)\auto', q[$(PM_FILTER)], '$(PERM_DIR)')" -- \
+	  lib/DBIx/DBH.pm blib\lib\DBIx\DBH.pm \
+	  lib/DBIx/DBH/SQLite.pm blib\lib\DBIx\DBH\SQLite.pm \
+	  lib/DBIx/DBH/Pg.pm blib\lib\DBIx\DBH\Pg.pm \
+	  ANNOUNCE-FACTOR.pod $(INST_LIB)\DBIx\ANNOUNCE-FACTOR.pod \
+	  lib/DBIx/DBH/Sybase.pm blib\lib\DBIx\DBH\Sybase.pm \
+	  lib/DBIx/DBH/mysql.pm blib\lib\DBIx\DBH\mysql.pm \
+	  lib/DBIx/DBH/Legacy.pm blib\lib\DBIx\DBH\Legacy.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 

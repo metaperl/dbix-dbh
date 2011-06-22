@@ -5,6 +5,7 @@ our $VERSION = '0.4';
 use Moose;
 use Moose::Util::TypeConstraints;
 use DBI;
+use Data::Dumper;
 
 has [ 'username', 'password' ] => (is => 'rw', isa => 'Str');
 
@@ -12,6 +13,12 @@ subtype 'DSNHashRef'  => as 'HashRef'  => where { defined($_->{driver}) };
 
 has 'dsn'  => (is => 'rw', isa => 'DSNHashRef');
 has 'attr' => (is => 'rw', isa => 'HashRef');
+has 'debug' => (is => 'rw', default => 0);
+
+sub BUILD {
+    my($self)=@_;
+    warn Dumper($self);
+}
 
 
 sub dsn_string {
@@ -24,32 +31,44 @@ sub dsn_string {
   my $extra = join ';', map { sprintf "%s=%s", $_, $dsn{$_} } (sort keys %dsn) ;
   length($extra) and $dsn = "$dsn:$extra";
 
+  $self->debug and warn "dsn: $dsn";
+
   $dsn;
 }
 
 sub for_dbi {
   my($self)=@_;
-  ($self->dsn_string, $self->username, $self->password, $self->attr);
+
+  my @dbi = ($self->dsn_string, $self->username, $self->password, $self->attr);
+  $self->debug and warn "dbi data: " . Dumper(\@dbi);
+  @dbi;
 }
 
 
 sub for_skinny {
   my($self)=@_;
+  my @data = 
   (
    dsn => $self->dsn_string, 
    username => $self->username, 
    password => $self->password
    );
+  $self->debug and warn "skinny data: " . Dumper(\@data);
+  @data;
 }
 
 sub for_rose_db {
   my($self)=@_;
 
-  (
+  my @data = (
    username => $self->username,
    password => $self->password,
    %{$self->dsn}
-  )
+      );
+
+  $self->debug and warn "data: " . Dumper(\@data);
+  @data;
+
 }
 
 sub dbh {
@@ -151,6 +170,27 @@ Instead of a bunch of string twiddling.
 =back
 
 =head1 METHODS
+
+=head2 for_dbi
+
+Returns data in a format suitable for calling C<< DBI->connect >>.
+
+=head3 dbh
+
+Actually constructs a L<DBI|DBI> database handle via  C<< DBI->connect >>.
+
+=head3 conn
+
+Actually constructs a L<DBIx::Connect|DBIx::Connector> database handle.
+
+=head2 for_skinny
+
+Returns data in a format suitable for using L<DBIx::Skinny|DBIx::Skinny>.
+
+=head2 for_rose_db
+
+Returns data in a format suitable for using L<Rose::DB>
+
 
 =head1 Legacy Version
 
